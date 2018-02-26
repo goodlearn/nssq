@@ -68,7 +68,7 @@ public class RelationshipInfoController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(RelationshipInfo relationshipInfo, Model model) {
 		model.addAttribute("relationshipInfo", relationshipInfo);
-		return "modules/sys/userInfo";
+		return "modules/sys/relationshipInfoForm";
 	}
 
 	@RequiresPermissions("sys:relationshipInfo:edit")
