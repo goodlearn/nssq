@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.UserInfoDao">
+    
+	<sql id="userInfoColumns">
+		a.id AS "id",
+		a.reg_work_unit_key AS "regWorkUnitKey",
+		a.area_prop_key AS "areaPropKey",
+		a.name AS "name",
+		a.prepared_name AS "preparedName",
+		a.group_key AS "groupKey",
+		a.id_card AS "idCard",
+		a.birth AS "birth",
+		a.gender AS "gender",
+		a.nation_key AS "nationKey",
+		a.culture_key AS "cultureKey",
+		a.political_key AS "politicalKey",
+		a.religion_key AS "religionKey",
+		a.merriage_key AS "merriageKey",
+		a.insurance_key AS "insuranceKey",
+		a.healthy_key AS "healthyKey",
+		a.disable_level_key AS "disableLevelKey",
+		a.occupation_key AS "occupationKey",
+		a.work_unit_key AS "workUnitKey",
+		a.lving_nature_key AS "lvingNatureKey",
+		a.telphone AS "telphone",
+		a.address AS "address",
+		a.domicile AS "domicile",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.enterprise_key AS "enterpriseKey",
+		a.residence_key AS "residenceKey",
+		a.residence_no AS "residenceNo",
+		a.hobo_key AS "hoboKey",
+		a.allowances_amount AS "allowancesAmount"
+	</sql>
+	
+	<sql id="userInfoJoins">
+	</sql>
+    
+	<select id="get" resultType="UserInfo">
+		SELECT 
+			<include refid="userInfoColumns"/>
+		FROM user_info a
+		<include refid="userInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="UserInfo">
+		SELECT 
+			<include refid="userInfoColumns"/>
+		FROM user_info a
+		<include refid="userInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="regWorkUnitKey != null and regWorkUnitKey != ''">
+				AND a.reg_work_unit_key = #{regWorkUnitKey}
+			</if>
+			<if test="areaPropKey != null and areaPropKey != ''">
+				AND a.area_prop_key = #{areaPropKey}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="preparedName != null and preparedName != ''">
+				AND a.prepared_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{preparedName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{preparedName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{preparedName},'%')</if>
+			</if>
+			<if test="groupKey != null and groupKey != ''">
+				AND a.group_key = #{groupKey}
+			</if>
+			<if test="idCard != null and idCard != ''">
+				AND a.id_card = #{idCard}
+			</if>
+			<if test="birth != null and birth != ''">
+				AND a.birth = #{birth}
+			</if>
+			<if test="gender != null and gender != ''">
+				AND a.gender = #{gender}
+			</if>
+			<if test="nationKey != null and nationKey != ''">
+				AND a.nation_key = #{nationKey}
+			</if>
+			<if test="cultureKey != null and cultureKey != ''">
+				AND a.culture_key = #{cultureKey}
+			</if>
+			<if test="politicalKey != null and politicalKey != ''">
+				AND a.political_key = #{politicalKey}
+			</if>
+			<if test="religionKey != null and religionKey != ''">
+				AND a.religion_key = #{religionKey}
+			</if>
+			<if test="merriageKey != null and merriageKey != ''">
+				AND a.merriage_key = #{merriageKey}
+			</if>
+			<if test="insuranceKey != null and insuranceKey != ''">
+				AND a.insurance_key LIKE 
+					<if test="dbName == 'oracle'">'%'||#{insuranceKey}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{insuranceKey}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{insuranceKey},'%')</if>
+			</if>
+			<if test="healthyKey != null and healthyKey != ''">
+				AND a.healthy_key = #{healthyKey}
+			</if>
+			<if test="disableLevelKey != null and disableLevelKey != ''">
+				AND a.disable_level_key = #{disableLevelKey}
+			</if>
+			<if test="occupationKey != null and occupationKey != ''">
+				AND a.occupation_key = #{occupationKey}
+			</if>
+			<if test="workUnitKey != null and workUnitKey != ''">
+				AND a.work_unit_key = #{workUnitKey}
+			</if>
+			<if test="lvingNatureKey != null and lvingNatureKey != ''">
+				AND a.lving_nature_key = #{lvingNatureKey}
+			</if>
+			<if test="telphone != null and telphone != ''">
+				AND a.telphone = #{telphone}
+			</if>
+			<if test="address != null and address != ''">
+				AND a.address LIKE 
+					<if test="dbName == 'oracle'">'%'||#{address}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{address}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{address},'%')</if>
+			</if>
+			<if test="domicile != null and domicile != ''">
+				AND a.domicile LIKE 
+					<if test="dbName == 'oracle'">'%'||#{domicile}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{domicile}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{domicile},'%')</if>
+			</if>
+			<if test="enterpriseKey != null and enterpriseKey != ''">
+				AND a.enterprise_key = #{enterpriseKey}
+			</if>
+			<if test="residenceKey != null and residenceKey != ''">
+				AND a.residence_key = #{residenceKey}
+			</if>
+			<if test="residenceNo != null and residenceNo != ''">
+				AND a.residence_no = #{residenceNo}
+			</if>
+			<if test="hoboKey != null and hoboKey != ''">
+				AND a.hobo_key = #{hoboKey}
+			</if>
+			<if test="allowancesAmount != null and allowancesAmount != ''">
+				AND a.allowances_amount = #{allowancesAmount}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="UserInfo">
+		SELECT 
+			<include refid="userInfoColumns"/>
+		FROM user_info a
+		<include refid="userInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO user_info(
+			id,
+			reg_work_unit_key,
+			area_prop_key,
+			name,
+			prepared_name,
+			group_key,
+			id_card,
+			birth,
+			gender,
+			nation_key,
+			culture_key,
+			political_key,
+			religion_key,
+			merriage_key,
+			insurance_key,
+			healthy_key,
+			disable_level_key,
+			occupation_key,
+			work_unit_key,
+			lving_nature_key,
+			telphone,
+			address,
+			domicile,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			enterprise_key,
+			residence_key,
+			residence_no,
+			hobo_key,
+			allowances_amount
+		) VALUES (
+			#{id},
+			#{regWorkUnitKey},
+			#{areaPropKey},
+			#{name},
+			#{preparedName},
+			#{groupKey},
+			#{idCard},
+			#{birth},
+			#{gender},
+			#{nationKey},
+			#{cultureKey},
+			#{politicalKey},
+			#{religionKey},
+			#{merriageKey},
+			#{insuranceKey},
+			#{healthyKey},
+			#{disableLevelKey},
+			#{occupationKey},
+			#{workUnitKey},
+			#{lvingNatureKey},
+			#{telphone},
+			#{address},
+			#{domicile},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{enterpriseKey},
+			#{residenceKey},
+			#{residenceNo},
+			#{hoboKey},
+			#{allowancesAmount}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE user_info SET 	
+			reg_work_unit_key = #{regWorkUnitKey},
+			area_prop_key = #{areaPropKey},
+			name = #{name},
+			prepared_name = #{preparedName},
+			group_key = #{groupKey},
+			id_card = #{idCard},
+			birth = #{birth},
+			gender = #{gender},
+			nation_key = #{nationKey},
+			culture_key = #{cultureKey},
+			political_key = #{politicalKey},
+			religion_key = #{religionKey},
+			merriage_key = #{merriageKey},
+			insurance_key = #{insuranceKey},
+			healthy_key = #{healthyKey},
+			disable_level_key = #{disableLevelKey},
+			occupation_key = #{occupationKey},
+			work_unit_key = #{workUnitKey},
+			lving_nature_key = #{lvingNatureKey},
+			telphone = #{telphone},
+			address = #{address},
+			domicile = #{domicile},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			enterprise_key = #{enterpriseKey},
+			residence_key = #{residenceKey},
+			residence_no = #{residenceNo},
+			hobo_key = #{hoboKey},
+			allowances_amount = #{allowancesAmount}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE user_info SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
