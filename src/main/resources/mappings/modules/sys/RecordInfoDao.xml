@@ -104,7 +104,10 @@
 				AND a.merriage_key = #{merriageKey}
 			</if>
 			<if test="insuranceKey != null and insuranceKey != ''">
-				AND a.insurance_key = #{insuranceKey}
+				AND a.insurance_key LIKE 
+					<if test="dbName == 'oracle'">'%'||#{insuranceKey}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{insuranceKey}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{insuranceKey},'%')</if>
 			</if>
 			<if test="healthyKey != null and healthyKey != ''">
 				AND a.healthy_key = #{healthyKey}

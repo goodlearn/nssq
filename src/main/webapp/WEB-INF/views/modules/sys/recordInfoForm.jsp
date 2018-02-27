@@ -31,6 +31,7 @@
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="recordInfo" action="${ctx}/sys/recordInfo/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
+		<form:hidden path="relationshipId"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<label class="control-label">关系：</label>
