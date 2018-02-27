@@ -108,8 +108,11 @@
     				<c:if test = "${recordInfo.relationshipId == '201802271713'}">
     					<a href="${ctx}/sys/recordInfo/addRf?relationshipId=${recordInfo.id}">添加关系</a>
 					    <a href="${ctx}/sys/recordInfo/detail?id=${recordInfo.id}">详细信息</a>
+					    <a href="${ctx}/sys/recordInfo/form?id=${recordInfo.id}">修改</a>
 					</c:if>
-    				<a href="${ctx}/sys/recordInfo/form?id=${recordInfo.id}">修改</a>
+					<c:if test = "${recordInfo.relationshipId != '201802271713'}">
+    					 <a href="${ctx}/sys/recordInfo/addRf?id=${recordInfo.id}">修改</a>
+					</c:if>
 					<a href="${ctx}/sys/recordInfo/delete?id=${recordInfo.id}" onclick="return confirmx('确认要删除该档案信息吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
