@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.RelationshipInfoDao">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.RecordInfoDao">
     
-	<sql id="relationshipInfoColumns">
+	<sql id="recordInfoColumns">
 		a.id AS "id",
-		a.user_info_id AS "userInfoId",
+		a.relationship_id AS "relationshipId",
 		a.relation_key AS "relationKey",
 		a.reg_work_unit_key AS "regWorkUnitKey",
 		a.area_prop_key AS "areaPropKey",
@@ -34,33 +34,32 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
-		a.enterprise_key AS "enterpriseKey",
 		a.residence_key AS "residenceKey",
 		a.residence_no AS "residenceNo",
 		a.hobo_key AS "hoboKey",
 		a.allowances_amount AS "allowancesAmount"
 	</sql>
 	
-	<sql id="relationshipInfoJoins">
+	<sql id="recordInfoJoins">
 	</sql>
     
-	<select id="get" resultType="RelationshipInfo">
+	<select id="get" resultType="RecordInfo">
 		SELECT 
-			<include refid="relationshipInfoColumns"/>
-		FROM relationship_info a
-		<include refid="relationshipInfoJoins"/>
+			<include refid="recordInfoColumns"/>
+		FROM record_info a
+		<include refid="recordInfoJoins"/>
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="RelationshipInfo">
+	<select id="findList" resultType="RecordInfo">
 		SELECT 
-			<include refid="relationshipInfoColumns"/>
-		FROM relationship_info a
-		<include refid="relationshipInfoJoins"/>
+			<include refid="recordInfoColumns"/>
+		FROM record_info a
+		<include refid="recordInfoJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="userInfoId != null and userInfoId != ''">
-				AND a.user_info_id = #{userInfoId}
+			<if test="relationshipId != null and relationshipId != ''">
+				AND a.relationship_id = #{relationshipId}
 			</if>
 			<if test="relationKey != null and relationKey != ''">
 				AND a.relation_key = #{relationKey}
@@ -76,12 +75,6 @@
 					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
 					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
-			</if>
-			<if test="preparedName != null and preparedName != ''">
-				AND a.prepared_name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{preparedName}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{preparedName}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{preparedName},'%')</if>
 			</if>
 			<if test="groupKey != null and groupKey != ''">
 				AND a.group_key = #{groupKey}
@@ -132,19 +125,10 @@
 				AND a.telphone = #{telphone}
 			</if>
 			<if test="address != null and address != ''">
-				AND a.address LIKE 
-					<if test="dbName == 'oracle'">'%'||#{address}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{address}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{address},'%')</if>
+				AND a.address = #{address}
 			</if>
 			<if test="domicile != null and domicile != ''">
-				AND a.domicile LIKE 
-					<if test="dbName == 'oracle'">'%'||#{domicile}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{domicile}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{domicile},'%')</if>
-			</if>
-			<if test="enterpriseKey != null and enterpriseKey != ''">
-				AND a.enterprise_key = #{enterpriseKey}
+				AND a.domicile = #{domicile}
 			</if>
 			<if test="residenceKey != null and residenceKey != ''">
 				AND a.residence_key = #{residenceKey}
@@ -169,11 +153,11 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="RelationshipInfo">
+	<select id="findAllList" resultType="RecordInfo">
 		SELECT 
-			<include refid="relationshipInfoColumns"/>
-		FROM relationship_info a
-		<include refid="relationshipInfoJoins"/>
+			<include refid="recordInfoColumns"/>
+		FROM record_info a
+		<include refid="recordInfoJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 		</where>		
@@ -188,9 +172,9 @@
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO relationship_info(
+		INSERT INTO record_info(
 			id,
-			user_info_id,
+			relationship_id,
 			relation_key,
 			reg_work_unit_key,
 			area_prop_key,
@@ -220,14 +204,13 @@
 			update_date,
 			remarks,
 			del_flag,
-			enterprise_key,
 			residence_key,
 			residence_no,
 			hobo_key,
 			allowances_amount
 		) VALUES (
 			#{id},
-			#{userInfoId},
+			#{relationshipId},
 			#{relationKey},
 			#{regWorkUnitKey},
 			#{areaPropKey},
@@ -257,7 +240,6 @@
 			#{updateDate},
 			#{remarks},
 			#{delFlag},
-			#{enterpriseKey},
 			#{residenceKey},
 			#{residenceNo},
 			#{hoboKey},
@@ -266,8 +248,8 @@
 	</insert>
 	
 	<update id="update">
-		UPDATE relationship_info SET 	
-			user_info_id = #{userInfoId},
+		UPDATE record_info SET 	
+			relationship_id = #{relationshipId},
 			relation_key = #{relationKey},
 			reg_work_unit_key = #{regWorkUnitKey},
 			area_prop_key = #{areaPropKey},
@@ -294,7 +276,6 @@
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},
-			enterprise_key = #{enterpriseKey},
 			residence_key = #{residenceKey},
 			residence_no = #{residenceNo},
 			hobo_key = #{hoboKey},
@@ -303,7 +284,7 @@
 	</update>
 	
 	<update id="delete">
-		UPDATE relationship_info SET 
+		UPDATE record_info SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>

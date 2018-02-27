@@ -5,14 +5,14 @@ package com.thinkgem.jeesite.modules.sys.dao;
 
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
-import com.thinkgem.jeesite.modules.sys.entity.RelationshipInfo;
+import com.thinkgem.jeesite.modules.sys.entity.RecordInfo;
 
 /**
- * 关系信息DAO接口
+ * 档案信息DAO接口
  * @author wzy
- * @version 2018-02-26
+ * @version 2018-02-27
  */
 @MyBatisDao
-public interface RelationshipInfoDao extends CrudDao<RelationshipInfo> {
+public interface RecordInfoDao extends CrudDao<RecordInfo> {
 	
 }

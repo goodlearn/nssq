@@ -1,3 +1,6 @@
+/**
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ */
 package com.thinkgem.jeesite.modules.sys.entity;
 
 import org.hibernate.validator.constraints.Length;
@@ -5,20 +8,20 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.google.common.collect.Lists;
-
 import javax.validation.constraints.NotNull;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
- * 人员信息Entity
+ * 档案信息Entity
  * @author wzy
  * @version 2018-02-27
  */
-public class UserInfo extends DataEntity<UserInfo> {
+public class RecordInfo extends DataEntity<RecordInfo> {
 	
 	private static final long serialVersionUID = 1L;
+	private String relationshipId;		// 关系人编号
+	private String relationKey;		// 关系
 	private String regWorkUnitKey;		// 登记单位
 	private String areaPropKey;		// 地区属性
 	private String name;		// 姓名
@@ -41,18 +44,24 @@ public class UserInfo extends DataEntity<UserInfo> {
 	private String telphone;		// 电话
 	private String address;		// 家庭住址
 	private String domicile;		// 户籍地
-	private String enterpriseKey;		// enterprise_key
-	private String residenceKey;		// residence_key
-	private String residenceNo;		// residence_no
-	private String hoboKey;		// hobo_key
-	private String allowancesAmount;		// allowances_amount
+	private String residenceKey;		// 户口性质
+	private String residenceNo;		// 户口簿号
+	private String hoboKey;		// 是否属于流动人口
+	private String allowancesAmount;		// 低保金额
 	
-	
+	//关系数据
+	private List<RecordInfo> ris;
 	private String birthShow;
-	private List<RelationshipInfo> rsis = null; // 拥有角色列表
+	private String hzName;
 	
-	
-	
+	public String getHzName() {
+		return hzName;
+	}
+
+	public void setHzName(String hzName) {
+		this.hzName = hzName;
+	}
+
 	public String getBirthShow() {
 		return birthShow;
 	}
@@ -61,23 +70,40 @@ public class UserInfo extends DataEntity<UserInfo> {
 		this.birthShow = birthShow;
 	}
 
-	public UserInfo() {
+	public List<RecordInfo> getRis() {
+		return ris;
+	}
+
+	public void setRis(List<RecordInfo> ris) {
+		this.ris = ris;
+	}
+
+	public RecordInfo() {
 		super();
 	}
 
-	public UserInfo(String id){
+	public RecordInfo(String id){
 		super(id);
 	}
+
+	@Length(min=0, max=64, message="关系人编号长度必须介于 0 和 64 之间")
+	public String getRelationshipId() {
+		return relationshipId;
+	}
+
+	public void setRelationshipId(String relationshipId) {
+		this.relationshipId = relationshipId;
+	}
 	
-
-	public List<RelationshipInfo> getRsis() {
-		return rsis;
+	@Length(min=0, max=100, message="关系长度必须介于 0 和 100 之间")
+	public String getRelationKey() {
+		return relationKey;
 	}
 
-	public void setRsis(List<RelationshipInfo> rsis) {
-		this.rsis = rsis;
+	public void setRelationKey(String relationKey) {
+		this.relationKey = relationKey;
 	}
-
+	
 	@Length(min=0, max=100, message="登记单位长度必须介于 0 和 100 之间")
 	public String getRegWorkUnitKey() {
 		return regWorkUnitKey;
@@ -277,16 +303,7 @@ public class UserInfo extends DataEntity<UserInfo> {
 		this.domicile = domicile;
 	}
 	
-	@Length(min=0, max=100, message="enterprise_key长度必须介于 0 和 100 之间")
-	public String getEnterpriseKey() {
-		return enterpriseKey;
-	}
-
-	public void setEnterpriseKey(String enterpriseKey) {
-		this.enterpriseKey = enterpriseKey;
-	}
-	
-	@Length(min=0, max=100, message="residence_key长度必须介于 0 和 100 之间")
+	@Length(min=0, max=100, message="户口性质长度必须介于 0 和 100 之间")
 	public String getResidenceKey() {
 		return residenceKey;
 	}
@@ -295,7 +312,7 @@ public class UserInfo extends DataEntity<UserInfo> {
 		this.residenceKey = residenceKey;
 	}
 	
-	@Length(min=0, max=100, message="residence_no长度必须介于 0 和 100 之间")
+	@Length(min=0, max=100, message="户口簿号长度必须介于 0 和 100 之间")
 	public String getResidenceNo() {
 		return residenceNo;
 	}
@@ -304,7 +321,7 @@ public class UserInfo extends DataEntity<UserInfo> {
 		this.residenceNo = residenceNo;
 	}
 	
-	@Length(min=0, max=100, message="hobo_key长度必须介于 0 和 100 之间")
+	@Length(min=0, max=100, message="是否属于流动人口长度必须介于 0 和 100 之间")
 	public String getHoboKey() {
 		return hoboKey;
 	}
@@ -313,7 +330,7 @@ public class UserInfo extends DataEntity<UserInfo> {
 		this.hoboKey = hoboKey;
 	}
 	
-	@Length(min=0, max=100, message="allowances_amount长度必须介于 0 和 100 之间")
+	@Length(min=0, max=100, message="低保金额长度必须介于 0 和 100 之间")
 	public String getAllowancesAmount() {
 		return allowancesAmount;
 	}

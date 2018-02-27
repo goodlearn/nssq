@@ -31,6 +31,8 @@ public class Global {
 	 */
 	private static PropertiesLoader loader = new PropertiesLoader("jeesite.properties");
 
+	public static final String DEFAULT_RELATION_ID = "201802271713";
+	
 	/**
 	 * 显示/隐藏
 	 */

@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>关系信息管理</title>
+	<title>档案信息管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,12 +27,11 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/sys/relationshipInfo/">关系信息列表</a></li>
-		<li class="active"><a href="${ctx}/sys/relationshipInfo/form?id=${relationshipInfo.id}">关系信息<shiro:hasPermission name="sys:relationshipInfo:edit">${not empty relationshipInfo.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:relationshipInfo:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/sys/recordInfo/">档案信息列表</a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="relationshipInfo" action="${ctx}/sys/relationshipInfo/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="recordInfo" action="${ctx}/sys/recordInfo/saveArf" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<form:hidden path="userInfoId"/>
+		<form:hidden path="relationshipId"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<label class="control-label">关系：</label>
@@ -217,15 +216,6 @@
 				<form:input path="domicile" htmlEscape="false" maxlength="255" class="input-xlarge "/>
 			</div>
 		</div>
-			<div class="control-group">
-			<label class="control-label">企业实体：</label>
-			<div class="controls">
-				<form:select path="enterpriseKey" class="input-xlarge ">
-					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('enterpriseKey')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
-			</div>
-		</div>
 		<div class="control-group">
 			<label class="control-label">户口性质：</label>
 			<div class="controls">
@@ -263,7 +253,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="sys:relationshipInfo:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<shiro:hasPermission name="sys:recordInfo:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

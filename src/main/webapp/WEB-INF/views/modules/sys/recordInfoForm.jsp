@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>人员信息管理</title>
+	<title>档案信息管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,12 +27,20 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/sys/userInfo/">人员信息列表</a></li>
-		<li class="active"><a href="${ctx}/sys/userInfo/form?id=${userInfo.id}">人员信息<shiro:hasPermission name="sys:userInfo:edit">${not empty userInfo.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:userInfo:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/sys/recordInfo/">档案信息列表</a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="userInfo" action="${ctx}/sys/userInfo/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="recordInfo" action="${ctx}/sys/recordInfo/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
+		<div class="control-group">
+			<label class="control-label">关系：</label>
+			<div class="controls">
+				<form:select path="relationKey" class="input-xlarge ">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('relationKey')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+			</div>
+		</div>
 		<div class="control-group">
 			<label class="control-label">登记单位：</label>
 			<div class="controls">
@@ -82,7 +90,7 @@
 			<label class="control-label">出生时间：</label>
 			<div class="controls">
 				<input name="birth" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-					value="<fmt:formatDate value="${userInfo.birth}" pattern="yyyy-MM-dd"/>"
+					value="<fmt:formatDate value="${relationshipInfo.birth}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
@@ -208,15 +216,6 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">企业实体：</label>
-			<div class="controls">
-				<form:select path="enterpriseKey" class="input-xlarge ">
-					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('enterpriseKey')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label">户口性质：</label>
 			<div class="controls">
 				<form:select path="residenceKey" class="input-xlarge ">
@@ -253,7 +252,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="sys:userInfo:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<shiro:hasPermission name="sys:recordInfo:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

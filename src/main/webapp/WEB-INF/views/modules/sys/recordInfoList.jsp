@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>人员信息管理</title>
+	<title>档案信息管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -18,10 +18,10 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/sys/userInfo/">户主信息列表</a></li>
-		<shiro:hasPermission name="sys:userInfo:edit"><li><a href="${ctx}/sys/userInfo/form">户主信息添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/sys/recordInfo/">档案信息列表</a></li>
+		<shiro:hasPermission name="sys:recordInfo:edit"><li><a href="${ctx}/sys/recordInfo/form">档案信息添加</a></li></shiro:hasPermission>
 	</ul>
-	<form:form id="searchForm" modelAttribute="userInfo" action="${ctx}/sys/userInfo/" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="recordInfo" action="${ctx}/sys/recordInfo/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
@@ -51,44 +51,66 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<th>所属户主</th>
 				<th>姓名</th>
+				<th>关系</th>
 				<th>身份证号</th>
 				<th>性别</th>
 				<th>婚姻状况</th>
+				<th>健康状况</th>
+				<th>社会保险状况</th>
+				<th>低保金额（元）</th>
 				<th>电话</th>
 				<th>更新时间</th>
-				<shiro:hasPermission name="sys:userInfo:edit"><th>操作</th></shiro:hasPermission>
+				<shiro:hasPermission name="sys:recordInfo:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${page.list}" var="userInfo">
+		<c:forEach items="${page.list}" var="recordInfo">
 			<tr>
 				<td>
-					${userInfo.name}
+					<c:if test = "${recordInfo.relationshipId != '201802271713'}">
+						<a href="${ctx}/sys/recordInfo/detail?id=${recordInfo.relationshipId}">${recordInfo.hzName}</a>
+					</c:if>
 				</td>
 				<td>
-					${userInfo.idCard}
+					${recordInfo.name}
 				</td>
 				<td>
-					${fns:getDictLabel(userInfo.gender, 'sex', '')}
+					${fns:getDictLabel(recordInfo.relationKey, 'relationKey', '')}
 				</td>
 				<td>
-					${fns:getDictLabel(userInfo.merriageKey, 'merriageKey', '')}
+					${recordInfo.idCard}
 				</td>
 				<td>
-					${userInfo.telphone}
+					${fns:getDictLabel(recordInfo.gender, 'sex', '')}
 				</td>
 				<td>
-					<fmt:formatDate value="${userInfo.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					${fns:getDictLabel(recordInfo.merriageKey, 'merriageKey', '')}
 				</td>
 				<td>
-					${userInfo.remarks}
+					${fns:getDictLabel(recordInfo.healthyKey, 'healthyKey', '')}
+					${fns:getDictLabel(recordInfo.disableLevelKey, 'disableLevelKey', '')}
 				</td>
-				<shiro:hasPermission name="sys:userInfo:edit"><td>
-				    <a href="${ctx}/sys/userInfo/detail?id=${userInfo.id}">详细信息</a>
-					<a href="${ctx}/sys/relationshipInfo/addRf?userInfoId=${userInfo.id}">添加关系</a>
-    				<a href="${ctx}/sys/userInfo/form?id=${userInfo.id}">修改</a>
-					<a href="${ctx}/sys/userInfo/delete?id=${userInfo.id}" onclick="return confirmx('确认要删除该人员信息吗？', this.href)">删除</a>
+				<td>
+					${fns:getDictLabels(recordInfo.insuranceKey,'insuranceKey','')}
+				</td>
+				<td>
+					${recordInfo.allowancesAmount}
+				</td>
+				<td>
+					${recordInfo.telphone}
+				</td>
+				<td>
+					<fmt:formatDate value="${recordInfo.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
+				<shiro:hasPermission name="sys:recordInfo:edit"><td>
+    				<c:if test = "${recordInfo.relationshipId == '201802271713'}">
+    					<a href="${ctx}/sys/recordInfo/addRf?relationshipId=${recordInfo.id}">添加关系</a>
+					    <a href="${ctx}/sys/recordInfo/detail?id=${recordInfo.id}">详细信息</a>
+					</c:if>
+    				<a href="${ctx}/sys/recordInfo/form?id=${recordInfo.id}">修改</a>
+					<a href="${ctx}/sys/recordInfo/delete?id=${recordInfo.id}" onclick="return confirmx('确认要删除该档案信息吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>
